@@ -45,4 +45,8 @@ public abstract class Publicacoes {
         this.autoresTitulacoes = autoresTitulacoes;
     }
 
+    public boolean isAvailable() {
+        return false;
+    }
+
 }
