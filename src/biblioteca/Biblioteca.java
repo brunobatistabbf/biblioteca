@@ -1,9 +1,7 @@
 package src.biblioteca;
 import java.util.List;
-
 import src.publicacoes.Publicacoes;
 import src.usuarios.Usuario;
-
 import java.util.ArrayList;
 
 public class Biblioteca {
