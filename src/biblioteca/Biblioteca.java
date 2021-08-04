@@ -2,6 +2,11 @@ package src.biblioteca;
 import java.util.List;
 import src.publicacoes.Publicacoes;
 import src.usuarios.Usuario;
+import src.usuarios.UsuarioComum;
+import src.usuarios.UsuarioEspecial;
+
+import java.util.Date;
+
 import java.util.ArrayList;
 
 public class Biblioteca {
@@ -76,6 +81,67 @@ public class Biblioteca {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+    public void emprestimo(UsuarioComum Usuario, Publicacoes pub){
+        if (Usuario.getLimite() == 0) {
+            System.out.println("Limite de renovações atingido!");
+        }else{
+            if(!pub.getStatus()){
+                Usuario.setLimite(Usuario.getLimite() - 1);
+                Usuario.registrarImprestimo(pub);
+                pub.setRenovacoes(3);
+                pub.setStatus(true);
+            }else{
+                System.out.println("Não disponivel para emprestimo!");
+            }
+        }
+    }
+
+    public void emprestimo(UsuarioEspecial Usuario, Publicacoes pub){
+        if(!pub.getStatus()){
+            Date data = new Date();
+            pub.setDataImprestimo(data.getTime());
+            Usuario.registrarImprestimo(pub);
+            pub.setRenovacoes(5);
+            pub.setStatus(true);
+        }else{
+            System.out.println("Não disponivel para emprestimo!");
+        }
+    }
+
+    public void renovar(Usuario user, String titulo){
+        ArrayList<Publicacoes> pubs = user.getPublisEmprestadas();
+        for (int i = 0; i < pubs.size(); i++) {
+            if (titulo.equals(pubs.get(i).getTitulo())) {
+                if (pubs.get(i).getRenovacoes() > 0) {
+                    pubs.get(i).setRenovacoes((pubs.get(i).getRenovacoes() - 1));
+                    System.out.println("Renovado com sucesso");
+                }else{
+                    pubs.get(i).setTotalMulta(pubs.get(i).getMulta() + pubs.get(i).getTotalMulta());
+                    System.out.println("Renovado com multa");
+                }
+            }
+        }
+    }
+    
+    public void devolução(Usuario user, String titulo){
+        ArrayList<Publicacoes> pubs = Usuario.getPublisEmprestadas();
+        for (int i = 0; i < pubs.size(); i++) {
+            if (titulo.equals(pubs.get(i).getTitulo())) {
+                Date data = new Date();
+                pubs.get(i).setDataEntrega(data.getTime());
+                long mili = pubs.get(i).getDataImprestimo() - pubs.get(i).getDataEntrega();
+                int dias = (int)(mili/86400000);
+                if(dias > pubs.get(i).getLimiteDias()){
+                    double calcMulta = (dias-pubs.get(i).getLimiteDias())*pubs.get(i).getMulta();
+                    pubs.get(i).setTotalMulta(pubs.get(i).getTotalMulta() + calcMulta);
+                }
+                pubs.get(i).setStatus(false);
+                System.out.println("Multa a ser paga: "+ pubs.get(i).getTotalMulta());
+                pubs.get(i).setTotalMulta(0);
+                pubs.remove(i);
+            } 
+        }
     }
 
 

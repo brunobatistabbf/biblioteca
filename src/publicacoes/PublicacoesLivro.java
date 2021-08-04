@@ -1,16 +1,20 @@
 package src.publicacoes;
 
+import java.util.ArrayList;
+
 public class PublicacoesLivro extends Publicacoes {
     private int edicao;
     private String editora;
     private int ISBN;
-    
-    public PublicacoesLivro(int dataP, String titulo, String referencias, String autoresTitulacoes, int edicao,
-            String editora, int ISBN) {
-        super(dataP, titulo, referencias, autoresTitulacoes);
+
+
+    public PublicacoesLivro(int dataP, String titulo, ArrayList<Publicacoes> pubs, String referencias,
+            String autoresTitulacoes, boolean status, int renovacoes) {
+        super(dataP, titulo, pubs, referencias, autoresTitulacoes, status, renovacoes);
+        //TODO Auto-generated constructor stub
         this.edicao = edicao;
         this.editora = editora;
-        this.ISBN = ISBN;
+        this.ISBN =ISBN;
     }
 
 
@@ -37,6 +41,6 @@ public class PublicacoesLivro extends Publicacoes {
     public void setISBN(int ISBN) {
         this.ISBN = ISBN;
     }
-    
+   
     
 }

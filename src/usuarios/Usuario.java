@@ -1,16 +1,22 @@
 package src.usuarios;
 
-public abstract class Usuario {
-private String nome;
-private int telefone;
-private String email;
-private String cpf;
+import java.util.ArrayList;
 
-    public Usuario(String nome, int telefone, String email, String cpf) {
+import src.publicacoes.Publicacoes;
+
+public abstract class Usuario {
+    private String nome;
+    private int telefone;
+    private String email;
+    private String cpf;
+    private static ArrayList<Publicacoes> publisEmprestadas = new ArrayList<Publicacoes>();
+
+    public Usuario(String nome, int telefone, String email, String cpf, ArrayList<Publicacoes> publisEmprestadas) {
         this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
         this.telefone = telefone;
+        this.email = email;
+        this.cpf = cpf;
+        this.publisEmprestadas = publisEmprestadas;
     }
 
     public String getNome() {
@@ -44,4 +50,18 @@ private String cpf;
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public static ArrayList<Publicacoes> getPublisEmprestadas() {
+        return publisEmprestadas;
+    }
+
+    public void setPublisEmprestadas(ArrayList<Publicacoes> publisEmprestadas) {
+        this.publisEmprestadas = publisEmprestadas;
+
+    }
+    
+    public void registrarImprestimo(Publicacoes pub){
+        publisEmprestadas.add(pub);
+    }
+ 
 }
