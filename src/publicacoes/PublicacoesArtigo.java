@@ -1,8 +1,6 @@
 package src.publicacoes;
-
 import java.io.ObjectInputFilter.Status;
 import java.util.ArrayList;
-
 import jdk.dynalink.linker.support.TypeUtilities;
 
 public class PublicacoesArtigo extends Publicacoes {
